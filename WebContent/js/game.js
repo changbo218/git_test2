@@ -936,7 +936,7 @@
       case 'KeyP':
       case 'Escape':
         event.preventDefault();
-        togglePause();
+        if (!event.repeat) togglePause();
         break;
       case 'KeyM':
         event.preventDefault();
