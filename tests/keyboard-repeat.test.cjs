@@ -41,8 +41,23 @@ function loadGame() {
   return {
     game: window.BrickBreaker,
     element,
-    key(code, repeat = false) {
-      listeners.get('keydown')({ code, repeat, target: null, preventDefault() {} });
+    soundLabel: () => element('soundBtn').textContent,
+    key(code, repeat = false, target = null) {
+      let prevented = false;
+      listeners.get('keydown')({
+        code,
+        repeat,
+        target,
+        preventDefault() {
+          prevented = true;
+        },
+      });
+      return prevented;
+    },
+    buttonTarget() {
+      const target = new Element();
+      target.closest = () => target;
+      return target;
     },
   };
 }
@@ -63,3 +78,26 @@ for (const code of ['KeyP', 'Escape']) {
     assert.equal(game.getState().phase, 'playing');
   });
 }
+
+test('KeyM: holding mute must toggle it only once', () => {
+  const { key, soundLabel } = loadGame();
+  assert.equal(soundLabel(), 'SOUND');
+  key('KeyM');
+  assert.equal(soundLabel(), 'MUTED');
+  key('KeyM', true);
+  key('KeyM', true);
+  key('KeyM', true);
+  assert.equal(soundLabel(), 'MUTED');
+  key('KeyM');
+  assert.equal(soundLabel(), 'SOUND');
+});
+
+test('Enter on a focused button: repeats must not re-activate it', () => {
+  const { key, buttonTarget } = loadGame();
+  const button = buttonTarget();
+  // The first press stays available to the button's native activation.
+  assert.equal(key('Enter', false, button), false);
+  // Auto-repeat keydowns must not reach it again.
+  assert.equal(key('Enter', true, button), true);
+  assert.equal(key('Enter', true, button), true);
+});
