@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#04060d" />
+  <title>打砖块 · Brick Breaker</title>
+  <link rel="stylesheet" href="css/game.css" />
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="brand" aria-label="Brick Breaker">
+        <span class="brand-mark" aria-hidden="true">▚</span>
+        <span>BRICK<span class="brand-slash">/</span><b>BREAKER</b></span>
+        <span class="brand-tag">WEB ARCADE</span>
+      </div>
+      <div class="top-actions">
+        <button id="soundBtn" class="icon-btn" type="button" aria-pressed="true" aria-label="关闭音效">SOUND</button>
+        <button id="pauseBtn" class="icon-btn" type="button" aria-label="暂停游戏">PAUSE</button>
+      </div>
+    </header>
+
+    <section class="hud" aria-label="游戏状态">
+      <div class="stat">
+        <span class="stat-label">SCORE</span>
+        <span id="score" class="stat-value">0</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">BEST</span>
+        <span id="best" class="stat-value">0</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">LEVEL</span>
+        <span id="level" class="stat-value">1<span class="dim">/3</span></span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">LIVES</span>
+        <span id="lives" class="stat-value lives-value" aria-label="剩余 3 条命">● ● ●</span>
+      </div>
+    </section>
+
+    <div class="stage-wrap">
+      <canvas id="game" width="960" height="640" aria-label="打砖块游戏画面">
+        你的浏览器不支持 Canvas，请使用较新的浏览器打开。
+      </canvas>
+
+      <div id="overlay" class="overlay">
+        <div class="panel">
+          <p id="overlayKicker" class="kicker">ARCADE MODE</p>
+          <h1 id="overlayTitle">打砖块</h1>
+          <p id="overlayText" class="overlay-text">移动挡板接住小球，打碎全部砖块。三关通关。</p>
+          <button id="primaryBtn" class="primary" type="button">开始游戏</button>
+          <p class="hint">
+            <kbd>←</kbd><kbd>→</kbd> / <kbd>A</kbd><kbd>D</kbd> / 鼠标移动
+            <span class="hint-sep">·</span> <kbd>空格</kbd> 发球
+            <span class="hint-sep">·</span> <kbd>P</kbd> 暂停
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <p class="foot-controls"><span class="dot" aria-hidden="true"></span> 鼠标 / 方向键移动 · 空格发球 · P 暂停</p>
+      <p id="status" class="status" role="status" aria-live="polite">准备就绪</p>
+    </footer>
+  </main>
+
+  <script src="js/game.js"></script>
+</body>
+</html>
