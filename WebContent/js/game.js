@@ -927,7 +927,12 @@
         }
         break;
       case 'Enter':
-        if (onButton) return;
+        if (onButton) {
+          // Let the focused button handle the first press, but stop the browser
+          // from activating it again for every auto-repeat keydown.
+          if (event.repeat) event.preventDefault();
+          return;
+        }
         if (['ready', 'paused', 'levelclear', 'gameover', 'win'].includes(state.phase)) {
           event.preventDefault();
           primaryAction();
@@ -936,11 +941,11 @@
       case 'KeyP':
       case 'Escape':
         event.preventDefault();
-        togglePause();
+        if (!event.repeat) togglePause();
         break;
       case 'KeyM':
         event.preventDefault();
-        toggleMute();
+        if (!event.repeat) toggleMute();
         break;
       default:
         break;
